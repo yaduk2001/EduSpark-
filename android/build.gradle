@@ -1,0 +1,35 @@
+buildscript {
+    repositories {
+        google() // Add the Google repository for dependencies
+        mavenCentral() // Add Maven Central for additional dependencies
+    }
+    dependencies {
+          // Add the Google services classpath
+        classpath 'com.android.tools.build:gradle:7.4.0' // Ensure you have the latest version
+        classpath 'com.google.gms:google-services:4.4.2' // Check for the latest version
+         // Import the BoM for the Firebase platform
+        
+        // Add the dependencies for the App Check libraries
+        // When using the BoM, you don't specify versions in Firebase library dependencies
+        
+    }
+}
+
+allprojects {
+    repositories {
+        google() // Google repository for all projects
+        mavenCentral() // Maven Central for all projects
+    }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
